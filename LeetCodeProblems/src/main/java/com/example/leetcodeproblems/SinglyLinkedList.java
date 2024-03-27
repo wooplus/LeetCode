@@ -2,6 +2,8 @@ package com.example.leetcodeproblems;
 
 import javafx.scene.shape.Line;
 
+import java.util.LinkedList;
+
 public class SinglyLinkedList {
 
     private LinkNode head;
@@ -126,7 +128,48 @@ public class SinglyLinkedList {
         return previous;
     }
 
+    public void removeDuplicatesInSortedLinkedList() {
+        LinkNode currentNode = head;
+        while(currentNode != null) {
+            LinkNode nextNode = currentNode.next;
+            if(nextNode.next == null) {
+                currentNode.next = nextNode.next;
+                return;
+            }else if(currentNode.data == nextNode.data ) {
+                currentNode.next = nextNode.next;
+            }
+
+            currentNode = currentNode.next;
+        }
+    }
+
+    public void insertInSortedLinkedList(int value)  {
+        LinkNode current = head;
+        LinkNode previous = head;
+        LinkNode newNode = new LinkNode(value);
+        if(current.data > value) {
+            newNode.next = head;
+            head = newNode;
+            return;
+        }
+        while(current != null) {
+            if(current.data > value) {
+                previous.next = newNode;
+                newNode.next = current;
+                return;
+            }
+            previous = current;
+            current = current.next;
+        }
+        previous.next = newNode;
+    }
+
     public LinkNode getNthNodeFromEnd(int n) {
+
+        if(n <= 0) {
+            throw new IllegalArgumentException("Invalid value: n = " + n);
+        }
+
         LinkNode mainPtr = head;
         LinkNode refPtr = head;
         int count = 0;
@@ -141,7 +184,57 @@ public class SinglyLinkedList {
         return mainPtr;
     }
 
-    public static void main(String[] args) {
+    public void removeValueFromSLL(LinkNode head, int value) {
+        LinkNode current = head;
+        LinkNode previous = head;
+
+        if(head.data == value) {
+            head = head.next;
+            return;
+        }
+
+        while(current != null && current.data != value ) {
+            previous = current;
+            current = current.next;
+        }
+        previous.next = current.next;
+    }
+
+    public boolean isLoopInSll(LinkNode head) {
+        LinkNode fastPtr = head;
+        LinkNode slowPtr = head;
+
+        while (fastPtr != null && fastPtr.next != null){
+            fastPtr = fastPtr.next.next;
+            slowPtr = slowPtr.next;
+            if(fastPtr == slowPtr) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public LinkNode createLoopInSll() {
+        LinkNode head = new LinkNode(1);
+        LinkNode first = new LinkNode(2);
+        LinkNode second = new LinkNode(3);
+        LinkNode third = new LinkNode(4);
+        LinkNode fourth = new LinkNode(5);
+        LinkNode fifth = new LinkNode(6);
+
+        head.next = first;
+        first.next = second;
+        second.next = third;
+        third.next = fourth;
+        fourth.next = fifth;
+        fifth.next = first;
+
+
+        return head;
+    }
+
+
+        public static void main(String[] args) {
         SinglyLinkedList sll = new SinglyLinkedList();
 //        sll.head = new ListNode(10);
 //        ListNode secondNode = new ListNode(1);
@@ -155,22 +248,36 @@ public class SinglyLinkedList {
 //        sll.insertBeginning(24);
 //        sll.insertBeginning(35);
 
-        sll.insertAtEnd(11);
-        sll.insertAtEnd(24);
-        sll.insertAtEnd(35);
-        sll.insertAtEnd(16);
-        sll.insertAtEnd(19);
+        sll.insertAtEnd(100);
+        sll.insertAtEnd(200);
+        sll.insertAtEnd(300);
+        sll.insertAtEnd(350);
+        sll.insertAtEnd(400);
+        sll.insertAtEnd(700);
+        sll.insertAtEnd(1600);
+        sll.insertAtEnd(1800);
+
+
 
 //        sll.deleteAtPosition(1);
 
-        sll.printNodesInsll(sll.head);
-        System.out.println(sll.getNumberOfNodes());
-        System.out.println(sll.searchElement(5));
+//        sll.printNodesInsll(sll.head);
+//        System.out.println(sll.getNumberOfNodes());
+//        System.out.println(sll.searchElement(5));
 
 //        LinkNode reverseSLL = sll.reverseSLL(sll.head);
 //        sll.printNodesInsll(reverseSLL);
 
-        System.out.println(sll.getNthNodeFromEnd(4 ).data);
+//        sll.removeDuplicatesInSortedLinkedList();
+//        sll.printNodesInsll(sll.head);
+        sll.insertInSortedLinkedList(1);
+        sll.printNodesInsll(sll.head);
+
+            LinkNode loopedSll = sll.createLoopInSll();
+            System.out.println(sll.isLoopInSll(loopedSll));
+
+
+//        System.out.println(sll.getNthNodeFromEnd(-6 ).data);
 
     }
 }
