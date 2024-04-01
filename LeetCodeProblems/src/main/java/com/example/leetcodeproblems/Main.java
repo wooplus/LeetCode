@@ -15,6 +15,21 @@ public class Main {
 
         solution.testing();
 
+        String s = "I am     going   To The  Class..";
+        String newStr = "";
+
+        for(int i = 0; i < s.length(); i++) {
+            if(i ==0) {
+                newStr += s.charAt(i);
+                continue;
+            }
+            if(s.charAt(i) == ' ' && s.charAt(i-1) == ' ' ) {
+                continue;
+            }
+            newStr += Character.toLowerCase(s.charAt(i));
+        }
+
+
 
     }
 }

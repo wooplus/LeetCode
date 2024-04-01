@@ -108,7 +108,124 @@ public class Solution {
         return sum;
     }
 
+    public void searchInSortedMatrix(int[][] matrix, int value, int n) {
+        int i = 0;
+        int j = n - 1;
 
+        while (i < n && j >= 0) {
+            if(value == matrix[i][j]) {
+                System.out.println("Found!");
+                return;
+            }
+            if(value > matrix[i][j]) {
+                System.out.println(i);
+                i++;
+            }else {
+                System.out.println(i);
+                j--;
+            }
+
+        }
+        System.out.println("Not found");
+    }
+
+    public int search(int[] arr, int x)  {
+        for(int i = 0; i < arr.length; i++) {
+            if(arr[i] == x ) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public int binarySearch(int[] arr, int key) {
+        int low = 0;
+        int high = arr.length -1;
+
+        while (low <= high) {
+            int mid = (low + high) /2;
+            if(arr[mid] == key) {
+                return mid;
+            }
+            if(key < arr[mid]) {
+                high = mid -1;
+            }else {
+                low = mid + 1;
+            }
+        }
+        return -1;
+    }
+
+    public int searchInsert(int[] arr, int key) {
+        int low = 0;
+        int high = arr.length -1;
+        while (low <= high) {
+            int mid = low + (high - low) /2;
+            if(arr[mid] == key) return mid;
+            if(key <  arr[mid] ) {
+                high = mid -1;
+            } else {
+                low = mid + 1;
+            }
+          }
+        return low;
+    }
+
+    public int[] bubbleSort(int[] arr) {
+        boolean isSwapped;
+        for(int i = 0; i < arr.length - 1; i++) {
+            isSwapped = false;
+            for(int j = 0; j < arr.length -1 - i; j++) {
+                if(arr[j] > arr[j+1]) {
+                    int tmp = arr[j];
+                    arr[j] = arr[j+1];
+                    arr[j+1] = tmp;
+                    isSwapped = true;
+                }
+            }
+
+            if(isSwapped == false) break;
+        }
+        return arr;
+    }
+
+    public int[] insertionSort(int[] arr) {
+        for(int i = 1; i < arr.length; i++) {
+            int tmp = arr[i];
+            int j = i -1;
+            while(j >=0 && arr[j] > tmp) {
+                arr[j+1] = arr[j];
+                j = j -1;
+            }
+            arr[j+1] =tmp;
+        }
+        return arr;
+    }
+
+    public int[] dutchNationalProblem(int[] arr) {
+        int i = 0;
+        int j = 0;
+        int k = arr.length -1;
+        while(i <= k) {
+            if(arr[i] == 0) {
+                swap(arr, i, j);
+                i++;
+                j++;
+            } else if(arr[i] == 1) {
+                i++;
+            } else if(arr[i] == 2) {
+                swap(arr, i, k);
+                k--;
+            }
+        }
+        return arr;
+    }
+
+    public void swap(int[] arr, int a, int b) {
+        int tmp = arr[a];
+        arr[a] = arr[b];
+        arr[b] = tmp;
+    }
 
 
         public void testing() {
@@ -132,9 +249,31 @@ public class Solution {
 //            int[] testingArr4 = {2,4,1,8,6,3,7};
 //            System.out.println(findMissingNum(testingArr4
 //            ));
+//
+//            System.out.println(isPalindrome("madam"));
+//            System.out.println(isPalindrome("racecar"));
+//            System.out.println(isPalindrome("bollym"));
 
-            System.out.println(isPalindrome("madam"));
-            System.out.println(isPalindrome("racecar"));
-            System.out.println(isPalindrome("bollym"));
+
+
+            int[][] sortedMatrix =  {
+                {10,20,30,40},
+                {15,25,35,45},
+                {27,29,37,48},
+                {32,33,39,51}
+            };
+
+            int [] binaryArr = {1,10,20, 47, 59, 65,75, 88, 99};
+
+            System.out.println(binarySearch(binaryArr,121 ));
+
+            int [] arr  = {1,5,9,2,10};
+            int[] bubbleSortedArr = bubbleSort(arr);
+            printNumInArr(bubbleSortedArr);
+
+            int [] insertionSortArr = insertionSort(arr);
+            printNumInArr(insertionSortArr);
+
+//            searchInSortedMatrix(sortedMatrix, 101, 4);
         }
     }

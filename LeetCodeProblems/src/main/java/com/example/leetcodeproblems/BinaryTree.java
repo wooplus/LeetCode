@@ -1,5 +1,7 @@
 package com.example.leetcodeproblems;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 public class BinaryTree {
@@ -89,6 +91,37 @@ public class BinaryTree {
         System.out.println(root.data);
     }
 
+    public void levelOrder(TreeNode root) {
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while(!queue.isEmpty()) {
+            TreeNode tmp = queue.poll();
+            System.out.println(tmp.data);
+            if(tmp.left != null) {
+                queue.offer(tmp.left);
+            }
+            if(tmp.right != null) {
+                queue.offer(tmp.right);
+            }
+        }
+    }
+
+    public int findMax(TreeNode root) {
+        if(root == null) {
+            return Integer.MIN_VALUE;
+        }
+        int max = root.data;
+        int left = findMax(root.left);
+        int right = findMax(root.right);
+        if(left > max) {
+            max = left;
+        }
+        if(right > max) {
+            max = right;
+        }
+        return max;
+    }
+
     public static void main(String[] args) {
         BinaryTree bt = new BinaryTree();
         TreeNode root = bt.createBinaryTree();
@@ -96,8 +129,10 @@ public class BinaryTree {
 //        bt.preOrderInStack(root);
 //
 
-        bt.postOrder(root);
+//        bt.postOrder(root);
+        bt.levelOrder(root);
 
+        System.out.println(bt.findMax(root));
     }
 
 
